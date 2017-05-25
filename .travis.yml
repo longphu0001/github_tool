@@ -1,0 +1,22 @@
+language: node_js
+node_js: stable
+
+install:
+  - npm install
+
+before_script:
+  - npm install -g gulp
+
+# script: gulp
+
+after_script:
+  - git add *
+  - git commit -m "Update docs"
+  - git push --force --quiet "https://9c3590f9800e7b6fe8863e99b56eacaa376dbbbc@github.com/YuPengZTE/github_tool.git" master:master
+
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/YuPengZTE/yupengzte.github.io.git
