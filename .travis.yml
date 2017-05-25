@@ -1,5 +1,7 @@
 language: go
-sudo: required
+sudo: false
+group: deprecated-2017Q1
+
 go:
   - 1.8.x
   - tip
