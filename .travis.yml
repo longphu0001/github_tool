@@ -1,15 +1,14 @@
-sudo: false
 language: go
-go:
-  - master
 
-install:
+go:
+  - 1.8.x
+  - tip
+
+before_install:
   - go get -t -v ./...
 
 script:
-  - go test -v -race ./...
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
 
-matrix:
-  allow_failures:
-    - go: master
-  fast_finish: true
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
