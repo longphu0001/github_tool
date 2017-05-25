@@ -21,3 +21,7 @@ func ExampleHello1() string {
  return hl
  // Output: hello func in package hello.
 }
+
+func hi() string {
+	return "Hi!"
+}
