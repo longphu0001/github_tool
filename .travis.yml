@@ -10,6 +10,8 @@ before_script:
 # script: gulp
 
 after_script:
+  - git config --global user.email "yu.peng36@zte.com.cn"
+  - git config --global user.name "YuPengZTE"
   - git add *
   - git commit -m "Update docs"
   - git push --force --quiet "https://9c3590f9800e7b6fe8863e99b56eacaa376dbbbc@github.com/YuPengZTE/github_tool.git" master:master
