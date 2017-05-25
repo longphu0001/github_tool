@@ -1,20 +1,17 @@
+sudo: false
 language: go
-
 go:
-  - 1.6
-  - 1.7
-  - 1.8
-  - tip
+  - 1.7.x
+  - 1.8.x
+  - master
 
-services:
-  - rabbitmq
-
-env:
- - AMQP_URL=amqp://guest:guest@127.0.0.1:5672/
-
-before_install:
-  - go get -v github.com/golang/lint/golint
+install:
+  - go get -t -v ./...
 
 script:
-  - ./pre-commit
-  - go test -cpu=1,2 -v -tags integration ./...
+  - go test -v -race ./...
+
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true

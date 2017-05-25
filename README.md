@@ -1,88 +1,82 @@
-[![Build Status](https://api.travis-ci.org/streadway/amqp.svg)](http://travis-ci.org/streadway/amqp) [![GoDoc](https://godoc.org/github.com/streadway/amqp?status.svg)](http://godoc.org/github.com/streadway/amqp)
+Golint is a linter for Go source code.
 
-# Go RabbitMQ Client Library
+[![Build Status](https://travis-ci.org/golang/lint.svg?branch=master)](https://travis-ci.org/golang/lint)
 
-This is an AMQP 0.9.1 client with RabbitMQ extensions in Go.
+## Installation
 
-## Project Maturity
+Golint requires Go 1.6 or later.
 
-This project has been used in production systems for many years. It is reasonably mature
-and feature complete, and as of November 2016 has [a team of maintainers](https://github.com/streadway/amqp/issues/215).
-
-Future API changes are unlikely but possible. They will be discussed on [Github
-issues](https://github.com/streadway/amqp/issues) along with any bugs or
-enhancements.
-
-## Supported RabbitMQ Versions
-
-This project supports RabbitMQ versions starting with `2.0` but primarily tested
-against reasonably recent `3.x` releases. Some features and behaviours may be
-server version-specific.
-
-## Goals
-
-Provide a functional interface that closely represents the AMQP 0.9.1 model
-targeted to RabbitMQ as a server.  This includes the minimum necessary to
-interact the semantics of the protocol.
-
-## Non-goals
-
-Things not intended to be supported.
-
-  * Auto reconnect and re-synchronization of client and server topologies.
-    * Reconnection would require understanding the error paths when the
-      topology cannot be declared on reconnect.  This would require a new set
-      of types and code paths that are best suited at the call-site of this
-      package.  AMQP has a dynamic topology that needs all peers to agree. If
-      this doesn't happen, the behavior is undefined.  Instead of producing a
-      possible interface with undefined behavior, this package is designed to
-      be simple for the caller to implement the necessary connection-time
-      topology declaration so that reconnection is trivial and encapsulated in
-      the caller's application code.
-  * AMQP Protocol negotiation for forward or backward compatibility.
-    * 0.9.1 is stable and widely deployed.  Versions 0.10 and 1.0 are divergent
-      specifications that change the semantics and wire format of the protocol.
-      We will accept patches for other protocol support but have no plans for
-      implementation ourselves.
-  * Anything other than PLAIN and EXTERNAL authentication mechanisms.
-    * Keeping the mechanisms interface modular makes it possible to extend
-      outside of this package.  If other mechanisms prove to be popular, then
-      we would accept patches to include them in this package.
+    go get -u github.com/golang/lint/golint
 
 ## Usage
 
-See the 'examples' subdirectory for simple producers and consumers executables.
-If you have a use-case in mind which isn't well-represented by the examples,
-please file an issue.
+Invoke `golint` with one or more filenames, directories, or packages named
+by its import path. Golint uses the same
+[import path syntax](https://golang.org/cmd/go/#hdr-Import_path_syntax) as
+the `go` command and therefore
+also supports relative import paths like `./...`. Additionally the `...`
+wildcard can be used as suffix on relative and absolute file paths to recurse
+into them.
 
-## Documentation
+The output of this tool is a list of suggestions in Vim quickfix format,
+which is accepted by lots of different editors.
 
-Use [Godoc documentation](http://godoc.org/github.com/streadway/amqp) for
-reference and usage.
+## Purpose
 
-[RabbitMQ tutorials in
-Go](https://github.com/rabbitmq/rabbitmq-tutorials/tree/master/go) are also
-available.
+Golint differs from gofmt. Gofmt reformats Go source code, whereas
+golint prints out style mistakes.
 
-## Contributing
+Golint differs from govet. Govet is concerned with correctness, whereas
+golint is concerned with coding style. Golint is in use at Google, and it
+seeks to match the accepted style of the open source Go project.
 
-Pull requests are very much welcomed.  Create your pull request on a non-master
-branch, make sure a test or example is included that covers your change and
-your commits represent coherent changes that include a reason for the change.
+The suggestions made by golint are exactly that: suggestions.
+Golint is not perfect, and has both false positives and false negatives.
+Do not treat its output as a gold standard. We will not be adding pragmas
+or other knobs to suppress specific warnings, so do not expect or require
+code to be completely "lint-free".
+In short, this tool is not, and will never be, trustworthy enough for its
+suggestions to be enforced automatically, for example as part of a build process.
+Golint makes suggestions for many of the mechanically checkable items listed in
+[Effective Go](https://golang.org/doc/effective_go.html) and the
+[CodeReviewComments wiki page](https://golang.org/wiki/CodeReviewComments).
 
-To run the integration tests, make sure you have RabbitMQ running on any host,
-export the environment variable `AMQP_URL=amqp://host/` and run `go test -tags
-integration`.  TravisCI will also run the integration tests.
+If you find an established style that is frequently violated, and which
+you think golint could statically check,
+[file an issue](https://github.com/golang/lint/issues).
 
-Thanks to the [community of contributors](https://github.com/streadway/amqp/graphs/contributors).
+## Contributions
 
-## External packages
+Contributions to this project are welcome, though please send mail before
+starting work on anything major. Contributors retain their copyright, so we
+need you to fill out
+[a short form](https://developers.google.com/open-source/cla/individual)
+before we can accept your contribution.
 
-  * [Google App Engine Dialer support](https://github.com/soundtrackyourbrand/gaeamqp)
-  * [RabbitMQ examples in Go](https://github.com/rabbitmq/rabbitmq-tutorials/tree/master/go)
+## Vim
 
-## License
+Add this to your ~/.vimrc:
 
-BSD 2 clause - see LICENSE for more details.
+    set rtp+=$GOPATH/src/github.com/golang/lint/misc/vim
+
+If you have multiple entries in your GOPATH, replace `$GOPATH` with the right value.
+
+Running `:Lint` will run golint on the current file and populate the quickfix list.
+
+Optionally, add this to your `~/.vimrc` to automatically run `golint` on `:w`
+
+    autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
 
 
+## Emacs
+
+Add this to your `.emacs` file:
+
+    (add-to-list 'load-path (concat (getenv "GOPATH")  "/src/github.com/golang/lint/misc/emacs"))
+    (require 'golint)
+
+If you have multiple entries in your GOPATH, replace `$GOPATH` with the right value.
+
+Running M-x golint will run golint on the current file.
+
+For more usage, see [Compilation-Mode](http://www.gnu.org/software/emacs/manual/html_node/emacs/Compilation-Mode.html).
