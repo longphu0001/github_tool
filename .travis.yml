@@ -10,6 +10,7 @@ before_install:
   - go get -t -v ./...
 
 script:
+  - chmod 777 *
   - ./go.test.sh
 
 after_success:
