@@ -1,90 +1,68 @@
-### Docker users, see [Moby and Docker](https://mobyproject.org/#moby-and-docker) to clarify the relationship between the projects
+[Codecov][1] Go Example
+=======================
 
-### Docker maintainers and contributors, see [Transitioning to Moby](#transitioning-to-moby) for more details
+This repository serves as an **example** on how to use [Codecov Global][4] for Go.
 
-The Moby Project
-================
+> Note: use `-covermode=atomic` or `-covermode=count` to show how many times a statement was executed.
 
-![Moby Project logo](docs/static_files/moby-project-logo.png "The Moby Project")
+# Travis CI
 
-Moby is an open-source project created by Docker to advance the software containerization movement.
-It provides a “Lego set” of dozens of components, the framework for assembling them into custom container-based systems, and a place for all container enthusiasts to experiment and exchange ideas.
+Add to your `.travis.yml` file.
+```yml
+language: go
 
-# Moby
+go:
+  - 1.8.x
+  - tip
 
-## Overview
+before_install:
+  - go get -t -v ./...
 
-At the core of Moby is a framework to assemble specialized container systems.
-It provides:
+script:
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
 
-- A library of containerized components for all vital aspects of a container system: OS, container runtime, orchestration, infrastructure management, networking, storage, security, build, image distribution, etc.
-- Tools to assemble the components into runnable artifacts for a variety of platforms and architectures: bare metal (both x86 and Arm); executables for Linux, Mac and Windows; VM images for popular cloud and virtualization providers.
-- A set of reference assemblies which can be used as-is, modified, or used as inspiration to create your own.
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+```
 
-All Moby components are containers, so creating new components is as easy as building a new OCI-compatible container.
+> - All other CI you can simply run `bash <(curl -s https://codecov.io/bash)`.
+> - `-race` is a suggestion, not required. Learn more at https://blog.golang.org/race-detector
 
-## Principles
+## Private Repos
+> Set `CODECOV_TOKEN` in your environment variables.
 
-Moby is an open project guided by strong principles, but modular, flexible and without too strong an opinion on user experience, so it is open to the community to help set its direction.
-The guiding principles are:
+Add to your `.travis.yml` file.
+```yml
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
+```
+> Or you can set the environment variable `CODECOV_TOKEN=uuid-repo-token` and remove the `-t` flag
 
-- Batteries included but swappable: Moby includes enough components to build fully featured container system, but its modular architecture ensures that most of the components can be swapped by different implementations.
-- Usable security: Moby will provide secure defaults without compromising usability.
-- Container centric: Moby is built with containers, for running containers.
+## Caveat: Multiple files
+> If you see this `cannot use test profile flag with multiple packages` then use this shell template to execute your tests and store coverage output
 
-With Moby, you should be able to describe all the components of your distributed application, from the high-level configuration files down to the kernel you would like to use and build and deploy it easily.
+```shell
+#!/usr/bin/env bash
 
-Moby uses [containerd](https://github.com/containerd/containerd) as the default container runtime.
+set -e
+echo "" > coverage.txt
 
-## Audience
+for d in $(go list ./... | grep -v vendor); do
+    go test -race -coverprofile=profile.out -covermode=atomic $d
+    if [ -f profile.out ]; then
+        cat profile.out >> coverage.txt
+        rm profile.out
+    fi
+done
+```
 
-Moby is recommended for anyone who wants to assemble a container-based system. This includes:
+Then run this file as your test (ex. `./test.sh`)
 
-- Hackers who want to customize or patch their Docker build
-- System engineers or integrators building a container system
-- Infrastructure providers looking to adapt existing container systems to their environment
-- Container enthusiasts who want to experiment with the latest container tech
-- Open-source developers looking to test their project in a variety of different systems
-- Anyone curious about Docker internals and how it’s built
+> Reference http://stackoverflow.com/a/21142256/2055281
 
-Moby is NOT recommended for:
+View source and learn more about [Codecov Global Uploader][4]
 
-- Application developers looking for an easy way to run their applications in containers. We recommend Docker CE instead.
-- Enterprise IT and development teams looking for a ready-to-use, commercially supported container platform. We recommend Docker EE instead.
-- Anyone curious about containers and looking for an easy way to learn. We recommend the docker.com website instead.
+Need help? Contact support https://github.com/codecov/support
 
-# Transitioning to Moby
-
-Docker is transitioning all of its open source collaborations to the Moby project going forward.
-During the transition, all open source activity should continue as usual.
-
-We are proposing the following list of changes:
-
-- splitting up the engine into more open components
-- removing the docker UI, SDK etc to keep them in the Docker org
-- clarifying that the project is not limited to the engine, but to the assembly of all the individual components of the Docker platform
-- open-source new tools & components which we currently use to assemble the Docker product, but could benefit the community
-- defining an open, community-centric governance inspired by the Fedora project (a very successful example of balancing the needs of the community with the constraints of the primary corporate sponsor)
-
------
-
-Legal
-=====
-
-*Brought to you courtesy of our legal counsel. For more context,
-please see the [NOTICE](https://github.com/moby/moby/blob/master/NOTICE) document in this repo.*
-
-Use and transfer of Moby may be subject to certain restrictions by the
-United States and other governments.
-
-It is your responsibility to ensure that your use and/or transfer does not
-violate applicable laws.
-
-For more information, please see https://www.bis.doc.gov
-
-
-Licensing
-=========
-Moby is licensed under the Apache License, Version 2.0. See
-[LICENSE](https://github.com/moby/moby/blob/master/LICENSE) for the full
-license text.
+[1]: https://codecov.io/
+[4]: https://github.com/codecov/codecov-bash
