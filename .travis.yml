@@ -1,24 +1,20 @@
-language: node_js
-node_js: stable
+language: go
 
-install:
-  - npm install
+go:
+  - 1.6
+  - 1.7
+  - 1.8
+  - tip
 
-before_script:
-  - npm install -g gulp
+services:
+  - rabbitmq
 
-# script: gulp
-
-after_script:
-  - git config --global user.email "yu.peng36@zte.com.cn"
-  - git config --global user.name "YuPengZTE"
-  - git add *
-  - git commit -m "Update docs"
-  - git push --force --quiet "https://9c3590f9800e7b6fe8863e99b56eacaa376dbbbc@github.com/YuPengZTE/github_tool.git" master:master
-
-branches:
-  only:
-    - master
 env:
- global:
-   - GH_REF: github.com/YuPengZTE/yupengzte.github.io.git
+ - AMQP_URL=amqp://guest:guest@127.0.0.1:5672/
+
+before_install:
+  - go get -v github.com/golang/lint/golint
+
+script:
+  - ./pre-commit
+  - go test -cpu=1,2 -v -tags integration ./...
