@@ -1,4 +1,4 @@
-package package_name
+package example
 
 import (
     . "github.com/onsi/ginkgo"

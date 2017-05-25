@@ -1,5 +1,4 @@
-package package_name
-
+package example
 import (
  "fmt"
  "testing"

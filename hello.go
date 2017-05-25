@@ -1,4 +1,4 @@
-package package_name
+package example
 
 func hello() string {
  words := []string{"hello", "func", "in", "package", "hello"}
