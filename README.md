@@ -21,10 +21,11 @@ before_install:
   - go get -t -v ./...
 
 script:
-  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - chmod 777 *
+  - ./go.test.sh
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t uuid-repo-token
 ```
 
 > - All other CI you can simply run `bash <(curl -s https://codecov.io/bash)`.
