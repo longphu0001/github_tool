@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/YuPengZTE/github_tool.svg?branch=master)](https://travis-ci.org/YuPengZTE/github_tool)
+
 [Codecov][1] Go Example
 =======================
 
