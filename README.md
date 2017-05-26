@@ -5,8 +5,6 @@
 
 This repository serves as an **example** on how to use [Codecov Global][4] for Go.
 
-> Note: use `-covermode=atomic` or `-covermode=count` to show how many times a statement was executed.
-
 # Travis CI
 
 Add to your `.travis.yml` file.
@@ -58,6 +56,7 @@ for d in $(go list ./... | grep -v vendor); do
     fi
 done
 ```
+> Note: use `-covermode=atomic` or `-covermode=count` to show how many times a statement was executed.
 
 Then run this file as your test (ex. `./test.sh`)
 
