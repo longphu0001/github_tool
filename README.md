@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/YuPengZTE/github_tool.svg?branch=master)](https://travis-ci.org/YuPengZTE/github_tool)
 [![codecov](https://codecov.io/gh/YuPengZTE/github_tool/branch/master/graph/badge.svg)](https://codecov.io/gh/YuPengZTE/github_tool)
+[![codebeat badge](https://codebeat.co/badges/ee2f2d59-3faa-4f08-8cd8-23f0bc8d095d)](https://codebeat.co/projects/github-com-yupengzte-github_tool-master)
+[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/YuPengZTE/github_tool/blob/master/LICENSE.md)
 
 [Codecov][1] Go Example
 =======================
