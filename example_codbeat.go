@@ -1,56 +1,31 @@
-package main
+package example
 
-import (
-    "fmt"
-    "runtime"
-    "time"
-)
-
-const COUNT int = 100
-const SIZE int = 300
-
-func main() {
-    var num [SIZE]int
-
-    for i := 0; i < COUNT; i++ {
-        num[i] = i
-    }
-    fmt.Println()
-    fmt.Printf("result=%d\n", calmul(num[0:]))
+import "fmt"  
+func buildHeap(array []int, length int) {  
+    var i, j int;  
+    for i = 1; i < length; i = i + 1 {  
+        for j = i; j > 0 && array[j] > array[(j-1)/2]; j = (j - 1)/2  {  
+            array[j], array[(j-1)/2] = array[(j-1)/2], array[j]    
+        }  
+    }  
+}  
+func heapSort(array []int, length int) {  
+    array[0], array[length - 1] = array[length - 1], array[0]  
+    if length <= 2 {  
+        return  
+    }  
+    i, j:= 0, 0  
+    for  {  
+        j = 2 * i + 1  
+        if j + 1 < length - 1 {  
+            if array[j] < array[j + 1] {  
+                j = j + 1  
+            }  
+        } else if j >= length -1 {  
+            break  
+        }     
+        array[i], array[j] = array[j], array[i]  
+        i = j  
+    }  
+    heapSort(array, length - 1)  
 }
-
-func calmul(num []int) int {
-    t1 := time.Now()
-
-    var MULTICORE int = runtime.NumCPU() //number of core
-
-    runtime.GOMAXPROCS(MULTICORE) //running in multicore
-
-    fmt.Printf("with %d core\n", MULTICORE)
-    ch := make(chan int)
-    for i := 0; i < MULTICORE; i++ {
-        go calsome(i*COUNT/MULTICORE, (i+1)*COUNT/MULTICORE, num[0:], ch)
-    } //divide into some parts
-
-    result := 0
-    for i := 0; i < MULTICORE; i++ {
-        temp := <-ch
-        fmt.Printf("multicore #%d result:%d\n", i, temp)
-        result += temp
-    } //read result of some part from channel,loop will stop after all is read
-
-    t2 := time.Now()
-
-    fmt.Printf("multicore total time:%d\n", t2.Sub(t1))
-
-    return result
-}
-
-func calsome(from, to int, num []int, ch chan int) {
-    someresult := 0
-    for i := from; i < to; i++ {
-        someresult += num[i]
-    }
-    ch <- someresult //put result in channel
-}
-
