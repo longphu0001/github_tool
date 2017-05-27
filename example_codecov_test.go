@@ -1,5 +1,6 @@
 package example
 import (
+ "fmt"
  "testing"
 )
  
