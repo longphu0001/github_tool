@@ -7,6 +7,8 @@
 [Codecov][1] Go Example
 =======================
 
+[![Join the chat at https://gitter.im/github_tool/Lobby](https://badges.gitter.im/github_tool/Lobby.svg)](https://gitter.im/github_tool/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This repository serves as an **example** on how to use [Codecov Global][4] for Go.
 
 # Travis CI
