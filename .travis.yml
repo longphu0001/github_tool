@@ -7,11 +7,15 @@ go:
 
 before_install:
   - go get -t -v ./...
+  
+  # install golint
   - go get -u github.com/golang/lint/golint
 
 script:
   - chmod 777 *
   - ./go.test.sh
+  
+  # run golint on all golang files
   - golint ./...
 
 after_success:
