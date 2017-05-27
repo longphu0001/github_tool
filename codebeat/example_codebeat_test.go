@@ -1,4 +1,4 @@
-package codbeat
+package codebeat
 import (
     "testing"
 )
