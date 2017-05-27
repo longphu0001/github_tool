@@ -1,6 +1,5 @@
 package example
 
-import "fmt"  
 func buildHeap(array []int, length int) {  
     var i, j int;  
     for i = 1; i < length; i = i + 1 {  
