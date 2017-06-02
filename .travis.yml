@@ -21,6 +21,4 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t cbd74805-3add-4079-8f25-1d39e3fa2528
   - npm install -g codeclimate-test-reporter
-  - CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage \
-    CODECLIMATE_REPO_TOKEN=ee2f2d59-3faa-4f08-8cd8-23f0bc8d095d \
-    codeclimate-test-reporter < coverage.txt
+  - CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage CODECLIMATE_REPO_TOKEN=ee2f2d59-3faa-4f08-8cd8-23f0bc8d095d codeclimate-test-reporter < coverage.txt
