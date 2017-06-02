@@ -14,11 +14,6 @@ for dir in **/ ; do
   cd $rootdir
 done
 
-if [ -z "$CI_NAME" ]; then
-  echo "CI_NAME is unset. Skipping coverage report!"
-  exit 0
-fi
-
 find . -name cov_part.out | xargs cat > cov.out
 # make sure we do not run the ruby gem which is first in $PATH :(
 node /usr/local/lib/node_modules/codeclimate-test-reporter/bin/codeclimate.js < cov.out
