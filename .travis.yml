@@ -6,7 +6,6 @@ go:
   - tip
 
 before_install:
-  - npm install -g codeclimate-test-reporter
   - go get -t -v ./...
   
   # install golint
@@ -15,11 +14,9 @@ before_install:
 script:
   - chmod 777 *
   - ./go.test.sh
-  - ./run_CI.sh
   
   # run golint on all golang files
   - golint ./...
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t cbd74805-3add-4079-8f25-1d39e3fa2528
-  - CODECLIMATE_API_HOST=https://codebeat.co/webhooks/code_coverage CODECLIMATE_REPO_TOKEN=ee2f2d59-3faa-4f08-8cd8-23f0bc8d095d
