@@ -5,6 +5,7 @@ The tool on github
 [![codebeat badge](https://codebeat.co/badges/ee2f2d59-3faa-4f08-8cd8-23f0bc8d095d)](https://codebeat.co/projects/github-com-yupengzte-github_tool-master)
 [![Join the chat at https://gitter.im/github_tool/Lobby](https://badges.gitter.im/github_tool/Lobby.svg)](https://gitter.im/github_tool/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/YuPengZTE/github_tool/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/gojp/goreportcard)](https://goreportcard.com/report/gojp/goreportcard)
 
 # Travis CI
 
