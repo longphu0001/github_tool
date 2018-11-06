@@ -6,6 +6,7 @@ The tool on github
 [![Join the chat at https://gitter.im/github_tool/Lobby](https://badges.gitter.im/github_tool/Lobby.svg)](https://gitter.im/github_tool/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/YuPengZTE/github_tool/blob/master/LICENSE)
 [![Go Report Card](https://goreportcard.com/badge/gojp/goreportcard)](https://goreportcard.com/report/gojp/goreportcard)
+[![CircleCI](https://circleci.com/gh/YuPengZTE/github_tool.svg?style=svg)](https://circleci.com/gh/YuPengZTE/github_tool)
 
 # Travis CI
 
@@ -67,3 +68,7 @@ Then run this file as your test (ex. `./test.sh`)
 View source and learn more about [Codecov Global Uploader][4]
 
 Need help? Contact support https://github.com/codecov/support
+
+## CirclCI
+Getting Started Introduction: https://circleci.com/docs/2.0/getting-started/#section=getting-started
+Configuring CircleCI: https://circleci.com/docs/2.0/configuration-reference/#section=configuration
